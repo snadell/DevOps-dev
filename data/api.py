@@ -7,6 +7,12 @@ import os
 app = Flask(__name__)
 logger = app.logger
 dao = None;
+@app.route("/accounts", methods=['GET', 'POST'])
+def accounts():
+    logger.debug("Get Accounts");
+    token = request.headers.get('token');
+    if not dao.authenticate(token):
+        return Response(status=401)
 @app.route("/health")
 def health():
     logger.debug("Get Health");
